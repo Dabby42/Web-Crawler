@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130627943-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-130627943-1');
+    </script>
+
+    <title>Kolorbi</title>
+    <meta charset="utf-8" />
+    <meta name="description" th:content="${news.subject}" />
+    <meta name="keywords" th:content="${news.seoKeyword}" />
+    <meta property="article:published_time" th:content="${news.crawledDate}" />
+    <meta property="article:section" content="news" />
+    <meta property="og:description" th:content="${news.subject}" />
+    <meta property="og:title" content="Welcome to Kolorbi" />
+    <meta property="og:url" content="https://kolorbi.com" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_GB" />
+
+
+    <link rel="shortcut icon" type="image/png" href="/images/png/kolorbi_favicon.png"/>
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#F63D3D">
+    <meta name="viewport" content="width=device-width , initial-scale=1">
+    <!-- css files -->
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <!-- put favicon here -->
+    <link rel="stylesheet" type="text/css" href="/css/animate.css">
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/pretty-checkbox.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/nprogress.css">
+    <link rel="stylesheet" type="text/css" href="/css/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/kolobi.css">
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9261824788583668",
+          enable_page_level_ads: true
+     });
+    </script>
+
+</head>
+<body>
+<!-- header -->
+<header class="app-header">
+    <img src="/images/svg/back.svg" class="app-header__back-icon">
+</header>
+
+
+<!-- article display section  -->
+<section class="app-section app--article">
+    <div class="full-article">
+        <div class="full-article__image-wrapper">
+            <!--<img src="/images/jpg/article.jpg">-->
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9261824788583668" data-ad-slot="5734509423" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12">
+
+                </div>
+                <div class="col-xs-12">
+                    <h2 class="full-article__title" id="subject">
+                        [[${news.subject}]]
+                    </h2>
+                    <div class="full-article__sub-info">
+                        <hr>
+                        <span>
+                            <i class="fa fa-globe"></i>
+                            <span id="source">[[${news.source}]]</span>
+                        </span>
+                        <span>
+                            <i class="fa fa-calendar"></i>
+                            <span id="date">[[${#dates.format(news.crawledDate, 'dd/MM/yyyy')}]]</span>
+                        </span>
+                    </div>
+                    <div class="full-article__content" th:if="${news.source == 'youtube.com'}">
+                        <article class="article animated fadeInUp" >
+                            <div class="container-fluid">
+                                <div class="row youtube-height">
+                                    <div class="youtube-player" >
+                                        <span class="article__subject">[[${news.subject}]]</span><img th:src="@{${news.newsImageURL}}" ><div th:attr="data-url=${news.sourceURL}" class="play" />
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="full-article__content" th:if="${news.source != 'youtube.com'}" th:utext="${news.viewContents}">
+
+                    </div>
+                    <section class="advert-placeholder animated fadeInUp">
+                        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9261824788583668" data-ad-slot="5734509423" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                        <!--<img src="images/jpg/adbanner.gif" alt="advert banner">-->
+                    </section>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h4 class="mini-article-header">Related Articles</h4>
+                            <!-- mini articles wrapper  -->
+                            <div class="mini-article-wrapper owl-carousel">
+                                <!-- mini articles -->
+                                <div class="mini-article item" th:each="news: ${relatedNews}">
+                                    <div class="mini-article__image-wrapper">
+                                        <img th:src="@{'/mirror?url=' + ${news.newsImageURL}}">
+                                    </div>
+                                    <div class="mini-article__info">
+
+                                        <h4 class="mini-article__title article__subject">
+                                            [[${news.subject}]]
+                                        </h4>
+                                        <div class="mini-article__sub-info">
+                                            <div><i class="fa fa-globe"></i>[[${news.source}]]</div>
+                                            <div><i class="fa fa-calendar"></i>[[${#dates.format(news.crawledDate, 'dd/MM/yyyy')}]]</div>
+                                        </div>
+                                        <a th:href="@{${news.linkURL}}" class="mini-article__link">see more</a>
+                                    </div>
+                                </div>
+                                <!-- mini articles end here -->
+                            </div>
+                            <!-- mini article wrapper ends here -->
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- lost price play card ends here -->
+
+</body>
+<!-- javascript files  -->
+<script type="text/javascript" src="/js/jquery3.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/owl.carousel.min.js"></script>
+<script type="text/javascript" src="/js/jquery-ui.js"></script>
+
+<script type="text/javascript" src="/js/axios.min.js"></script>
+<script type="text/javascript" src="/js/service.js"></script>
+<script type="text/javascript" src="/js/kolobi.js"></script>
+<script type="text/javascript" src="/js/news.js"></script>
+
+
+</html>

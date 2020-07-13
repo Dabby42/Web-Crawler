@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130627943-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-130627943-1');
+    </script>
+
+    <title>Kolorbi</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Kolorbi trending news / Best website for nigerian news / Raffle draw wins / Free airtime">
+    <meta name="keywords" content="blogs,news, blog, Entertainment, Lifestyle, Fashion, Beauty, Inspiration, politics, gossip, Events">
+    <meta property="article:published_time" content="">
+    <meta property="article:section" content="news">
+    <meta property="og:description" content="Kolorbi trending news / Best website for nigerian news / Raffle draw wins / Free airtime" />
+    <meta property="og:title" content="Welcome to Kolorbi" />
+    <meta property="og:url" content="https://kolorbi.com" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_GB" />
+
+
+    <link rel="shortcut icon" type="image/png" href="/images/png/kolorbi_favicon.png"/>
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#F63D3D">
+    <meta name="viewport" content="width=device-width , initial-scale=1">
+    <!-- css files -->
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <!-- put favicon here -->
+    <link rel="stylesheet" type="text/css" href="/css/animate.css">
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/pretty-checkbox.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/nprogress.css">
+    <link rel="stylesheet" type="text/css" href="/css/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/kolobi.css">
+
+
+
+</head>
+<body>
+<!-- header -->
+<header class="app-header">
+    <img src="/images/png/kolorbi_white_70px.png" class="app-header__icon">
+</header>
+<!-- app section-->
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide">
+            <section class="app-section app--news item">
+                <!-- article component starts here -->
+                <div th:each="news: ${allNews}">
+                    <article class="article animated fadeInUp" th:if="${news.source != 'youtube.com'}">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-xs-8">
+                                    <div class="article__info">
+                                        <h2 class="article__title">
+                                            <span class="article__subject">[[${news.subject}]]</span>
+                                            <a class="article__link" th:href="@{${news.linkURL}}" >See More</a>
+                                        </h2>
+
+                                        <div class="article__sub-info">
+                                            <hr>
+                                            <span><i class="fa fa-globe "></i>[[${news.source}]]</span>
+                                            <span><i class="fa fa-calendar"> </i> [[${#dates.format(news.crawledDate, 'dd/MM/yyyy')}]] </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="article__image-wrapper">
+                                        <img class="article__image" th:src="@{'/mirror?url=' + ${news.newsImageURL}}" alt="article image">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+
+                    <article class="article animated fadeInUp" th:if="${news.source == 'youtube.com'}">
+                        <div class="container-fluid">
+                            <div class="row youtube-height">
+                                <div class="youtube-player" >
+                                    <span class="article__subject">[[${news.subject}]]</span><img th:src="@{${news.newsImageURL}}" ><div th:attr="data-url=${news.sourceURL}" class="play" />
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="article animated fadeInUp" th:if="${newsStat.count % 3 == 1}">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <script type="text/javascript">
+                                    var adx_adsvr_adspace_vAppRoot="https://ads.dochase.com/adx-dir-d/";
+                                    var adx_adsvr_adspace_id="3176";
+                                    var adx_size="728x90";
+                                    var adx_custom="";
+                                    var adx_nid="13";
+                                </script>
+                                <script type="text/javascript" src="https://j.dochase.com/adxads.js"></script>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                <!-- article ends here -->
+                <!--<section class="advert-placeholder animated fadeInUp">
+                    <img src="images/jpg/adbanner.gif" alt="placeholder+image">
+                </section>-->
+
+                <a th:if="${#lists.size(allNews) == 15}" th:href="@{'?page=' + ${page + 1}}" style="text-decoration: none" >
+                    <div  class="float">
+                        More News <i class="fa fa-plus my-float"></i>
+                    </div>
+                </a>
+            </section>
+
+
+        </div>
+        <div class="swiper-slide" >
+
+
+            <!-- play win section starts here -->
+            <section class="app-section app--play s-height item  ">
+
+                <!-- redeeem price play card  -->
+                <div class="lottery-card lottery-card--redeem animated fadeInUp fast ">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div class="lottery-card__image-wrapper">
+                                    <img src="/images/svg/money.svg">
+                                </div>
+
+                            </div>
+                            <div class="col-xs-8">
+                                <div class="lottery-card__info">
+                                    <p class="lottery-card__sub-info">
+                                        <img class="lottery-card__icon" src="/images/svg/coins.svg"><span> <span id="100_count">[[${counters.get('100')}]]</span>/100 people played</span>
+                                    </p>
+                                    <h4 class="lottery-card__lead">Play with &#8358;100 and win &#8358;9,000 </h4>
+                                    <button data-amount="100" data-win-amount="9000" class="button button-sm lottery-btn lottery-btn-one">Play</button>
+                                    <a class="claim-raffle-win">Claim win</a>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- redeem price play card ends here -->
+
+                <!-- advert section -->
+                <div class="advert-placeholder animated fadeInUp">
+                    <script type="text/javascript">
+                        var adx_adsvr_adspace_vAppRoot="https://ads.dochase.com/adx-dir-d/";
+                        var adx_adsvr_adspace_id="3176";
+                        var adx_size="728x90";
+                        var adx_custom="";
+                        var adx_nid="13";
+                    </script>
+                    <script type="text/javascript" src="https://j.dochase.com/adxads.js"></script>
+                    <!--<img src="images/jpg/adbanner.gif" alt="advert banner">-->
+                </div>
+
+                <!-- redeeem price play card  -->
+
+                <div class="lottery-card lottery-card--redeem animated fadeInUp fast delay-1s">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div class="lottery-card__image-wrapper">
+                                    <img src="/images/svg/money.svg">
+                                </div>
+
+                            </div>
+                            <div class="col-xs-8">
+                                <div class="lottery-card__info">
+                                    <p class="lottery-card__sub-info"><img class="lottery-card__icon"
+                                                                           src="/images/svg/coins.svg"><span> <span id="200_count">[[${counters.get('200')}]]</span>/100 people played</span>
+                                    </p>
+                                    <h4 class="lottery-card__lead">Play with &#8358;200 and win &#8358;18,000 </h4>
+                                    <button data-amount="200" data-win-amount="18000" class="button button-sm lottery-btn lottery-btn-two">Play</button>
+                                    <a class="claim-raffle-win">Claim win</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- redeem price play card ends here -->
+
+                <!-- advert section -->
+                <div class="advert-placeholder animated fadeInUp">
+                    <script type="text/javascript">
+                        var adx_adsvr_adspace_vAppRoot="https://ads.dochase.com/adx-dir-d/";
+                        var adx_adsvr_adspace_id="3176";
+                        var adx_size="728x90";
+                        var adx_custom="";
+                        var adx_nid="13";
+                    </script>
+                    <script type="text/javascript" src="https://j.dochase.com/adxads.js"></script>
+                    <!--<img src="images/jpg/adbanner.gif" alt="advert banner">-->
+                </div>
+                <!-- redeeem price play card  -->
+                <div class="lottery-card lottery-card--redeem animated fadeInUp fast delay-2s">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div class="lottery-card__image-wrapper">
+                                    <img src="/images/svg/money.svg">
+                                </div>
+
+                            </div>
+                            <div class="col-xs-8">
+                                <div class="lottery-card__info">
+                                    <p class="lottery-card__sub-info"><img class="lottery-card__icon"
+                                                                           src="/images/svg/coins.svg"><span> <span id="500_count">[[${counters.get('500')}]]</span>/100 people played</span>
+                                    </p>
+                                    <h4 class="lottery-card__lead">Play with &#8358;500 and win &#8358;45,000 </h4>
+                                    <button data-amount="500" data-win-amount="45000" class="button button-sm  lottery-btn lottery-btn-three">Play</button>
+                                    <a class="claim-raffle-win">Claim win</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- redeem price play card ends here -->
+
+                <!-- advert section -->
+                <div class="advert-placeholder animated fadeInUp">
+                    <script type="text/javascript">
+                        var adx_adsvr_adspace_vAppRoot="https://ads.dochase.com/adx-dir-d/";
+                        var adx_adsvr_adspace_id="3176";
+                        var adx_size="728x90";
+                        var adx_custom="";
+                        var adx_nid="13";
+                    </script>
+                    <script type="text/javascript" src="https://j.dochase.com/adxads.js"></script>
+                    <!--<img src="images/jpg/adbanner.gif" alt="advert banner">-->
+                </div>
+
+                <!-- redeeem price play card  -->
+                <div class="lottery-card lottery-card--redeem animated fadeInUp fast delay-2s">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div class="lottery-card__image-wrapper">
+                                    <img src="/images/svg/money.svg">
+                                </div>
+
+                            </div>
+                            <div class="col-xs-8">
+                                <div class="lottery-card__info">
+                                    <p class="lottery-card__sub-info"><img class="lottery-card__icon"
+                                                                           src="/images/svg/coins.svg"><span> <span id="1000_count">[[${counters.get('1000')}]]</span>/100 people played</span>
+                                    </p>
+                                    <h4 class="lottery-card__lead">Play with &#8358;1,000 and win &#8358;90,000 </h4>
+                                    <button data-amount="1000" data-win-amount="90000" class="button button-sm  lottery-btn lottery-btn-three">Play</button>
+                                    <a class="claim-raffle-win">Claim win</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- redeem price play card ends here -->
+
+
+            </section>
+            <!-- end of play section  -->
+        </div>
+        <div class="swiper-slide">
+
+
+            <!-- awoof section-->
+            <section class="app-section app--awoof s-height item  ">
+                <div class="container-fluid">
+                    <div class="row">
+
+                        <div class="col-xs-12">
+                            <div class="card-box  animated fadeInUp fast delay-1s ">
+                                <h2 class="card-box__title">Tap the wheel and stand a chance to win free credit or
+                                    data</h2>
+                                <hr>
+                                <div class="card-box__footer">
+                                    <span>powered by</span>
+                                    <img class="sponsor-placeholder" src="/images/jpg/mtn.jpg"></img>
+                                    <img class="sponsor-placeholder" src="/images/jpg/airtel.jpg"></img>
+                                    <img class="sponsor-placeholder" src="/images/jpg/9mobile.jpg"></img>
+                                </div>
+                            </div>
+                            <!-- advert placements  -->
+                            <div class="advert-placeholder animated fadeInUp">
+                                <script type="text/javascript">
+                                    var adx_adsvr_adspace_vAppRoot="https://ads.dochase.com/adx-dir-d/";
+                                    var adx_adsvr_adspace_id="3176";
+                                    var adx_size="728x90";
+                                    var adx_custom="";
+                                    var adx_nid="13";
+                                </script>
+                                <script type="text/javascript" src="https://j.dochase.com/adxads.js"></script>
+                                <!--<img src="images/jpg/adbanner.gif" alt="advert banner">-->
+                            </div>
+                            <!-- advet placement ends here -->
+
+                            <!-- awwoof wheel  -->
+                            <div class="card-box animated fadeInUp fast delay-1s">
+                                <div class="card-box__wheel"></div>
+                            </div>
+                            <!-- awoof wheel ends here  -->
+
+                            <!-- advert placements  -->
+                            <div class="advert-placeholder animated fadeInUp">
+                                <script type="text/javascript">
+                                    var adx_adsvr_adspace_vAppRoot="https://ads.dochase.com/adx-dir-d/";
+                                    var adx_adsvr_adspace_id="3176";
+                                    var adx_size="728x90";
+                                    var adx_custom="";
+                                    var adx_nid="13";
+                                </script>
+                                <script type="text/javascript" src="https://j.dochase.com/adxads.js"></script>
+                                <!--<img src="images/jpg/adbanner.gif" alt="advert banner">-->
+                            </div>
+                            <!-- advet placement ends here -->
+
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+            <!-- awoof section ends here -->
+        </div>
+    </div>
+
+    <!-- menu section   -->
+    <div class="swiper-pagination">
+        <!-- <a class="menu__btn menu__btn--newsArray active">
+            <img src="./images/svg/newsArray.svg">
+        </a>
+        <a class="menu__btn menu__btn--raffle">
+            <img src="./images/svg/raffle.svg">
+        </a>
+        <a class="menu__btn menu__btn--awoof">
+            <img src="./images/svg/gift.svg">
+        </a> -->
+    </div>
+</div>
+
+
+<form id="awoof_redeem" class="card-box card-box--win animated fadeInUp fast delay-1s">
+    <div class="text-right text-danger"><span class="card-box--close card-box__win--close "><i
+            class="fa fa-remove fa-2x"></i></span></div>
+    <img class="card-box__icon" src="/images/svg/money.svg"></img>
+    <h2 class="card-box__title">You have won &#8358;100 awoof</h2>
+    <div class="card-box__action-wrapper">
+        <div class="form-group col-xs-12 col-sm-6 col-sm-offset-3">
+            <input class="form-control card-box__input" type="tel" name="tel"
+                   placeholder="Insert Phone Number">
+        </div>
+    </div>
+    <div class="form-group col-xs-12 col-sm-6 col-sm-offset-3">
+        <input type="submit" class="button button-redeem" name="redeem" value="Redeem">
+    </div>
+</form>
+
+
+<form id="raffle_redeem" class="card-box card-box--raffle-win animated fadeInUp fast delay-1s">
+    <div class="text-right text-danger"><span class="card-box--close card-box__win_raffle--close "><i
+            class="fa fa-remove fa-2x"></i></span></div>
+    <img class="card-box__icon" src="/images/svg/money.svg"></img>
+    <h2 class="card-box__title">Claim your raffle win</h2>
+    <div class="card-box__action-wrapper">
+        <div class="form-group col-sm-6 col-md-6 col-sm-offset-3">
+            <div class="">
+                <input class="form-control" placeholder="Your WinCode"  type="text" name="winCode" required />
+            </div>
+        </div>
+        <div class="form-group col-sm-6 col-md-6 col-sm-offset-3">
+            <div class="">
+
+                <input class="form-control" placeholder="Account number" type="text" name="accountNumber" required />
+            </div>
+        </div>
+        <div class="form-group col-sm-6 col-md-6 col-sm-offset-3">
+            <div class="">
+                <select id="bankCode" class="form-control" type="text" name="bankCode" required >
+                    <option disabled selected value>Select Bank</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group col-sm-6 col-md-6 col-sm-offset-3" id="otp-container" >
+            <div class="">
+                <input class="form-control" placeholder="OTP" type="number" name="otp" />
+                <div>
+                    <a id="resend-otp">resend otp</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group col-sm-6 col-md-6 col-sm-offset-3">
+        <input type="submit" class="button" name="submit" value="Proceed">
+    </div>
+
+</form>
+
+<!-- succesfully redeemed play card  -->
+<div class="play-card play-card--success">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-right text-danger"><span
+                        class="play-card--close play-card__win--close "><i
+                        class="fa fa-remove fa-2x"></i></span></div>
+                <div class="play_card__image-wrapper animated fadeInUp">
+                    <img src="/images/svg/wallet.svg">
+                </div>
+
+            </div>
+            <div class="col-xs-12">
+                <div class="play-card__info animated fadeInUp">
+                    <p class="play-card__sub-info ">Your price has been successfully </span></p>
+                    <h4 class="play-card__lead">Redeemed</h4>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="advert-placeholder animated fadeInUp">
+                    <script type="text/javascript">
+                        var adx_adsvr_adspace_vAppRoot="https://ads.dochase.com/adx-dir-d/";
+                        var adx_adsvr_adspace_id="3176";
+                        var adx_size="728x90";
+                        var adx_custom="";
+                        var adx_nid="13";
+                    </script>
+                    <script type="text/javascript" src="https://j.dochase.com/adxads.js"></script>
+                    <!--<img src="images/jpg/adbanner.gif" alt="advert banner">-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- succesfully redeemed play card ends here -->
+
+<!-- lost price play card  -->
+<div class="card-box card-box--fail">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-right text-danger"><span
+                        class="card-box--close card-box__try--close "><i
+                        class="fa fa-remove fa-2x"></i></span></div>
+                <div class="advert-placeholder animated fadeInUp">
+                    <script type="text/javascript">
+                        var adx_adsvr_adspace_vAppRoot="https://ads.dochase.com/adx-dir-d/";
+                        var adx_adsvr_adspace_id="3176";
+                        var adx_size="728x90";
+                        var adx_custom="";
+                        var adx_nid="13";
+                    </script>
+                    <script type="text/javascript" src="https://j.dochase.com/adxads.js"></script>
+                    <!--<img src="images/jpg/adbanner.gif" alt="advert banner">-->
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="play_card__image-wrapper animated fadeInUp">
+                    <img src="/images/svg/sad.svg">
+                </div>
+
+            </div>
+            <div class="col-xs-12">
+                <div class="play-card__info animated fadeInUp">
+                    <h4 class="play-card__lead">You were close</h4>
+                    <button class="button button-try-wheel">Try Again</button>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="advert-placeholder animated fadeInUp">
+                    <script type="text/javascript">
+                        var adx_adsvr_adspace_vAppRoot="https://ads.dochase.com/adx-dir-d/";
+                        var adx_adsvr_adspace_id="3176";
+                        var adx_size="728x90";
+                        var adx_custom="";
+                        var adx_nid="13";
+                    </script>
+                    <script type="text/javascript" src="https://j.dochase.com/adxads.js"></script>
+                    <!--<img src="images/jpg/adbanner.gif" alt="advert banner">-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- lost price play card ends here -->
+<!-- play lottery form -->
+<form id="raffle_form" class="card-box card-box--play-lottery animated fadeInUp fast ">
+    <div class="text-right text-danger"><span class="card-box--close card-box__play--close "><i
+            class="fa fa-remove fa-2x"></i></span></div>
+    <img class="card-box__icon" src="/images/svg/money.svg"></img>
+    <h2 class="card-box__title">To Win &#8358; <span id="raffle_win_amount">0</span></h2>
+    <p class="card-box__lead">Play with &#8358; <span id="raffle_amount">0</span></p>
+
+    <div class="clearfix">
+        <div class="form-group col-xs-12 col-sm-6 col-sm-offset-3">
+            <input id="tt" class="form-control card-box__input" type="tel" name="tel"
+                   placeholder="Phone Number"
+                   oninput="setCustomValidity('')" required ></input>
+        </div>
+    </div>
+    <input type="submit" class="button button--play" name="" value="Play">
+</form>
+
+
+<!-- lost price play card  -->
+<div class="play-card play-card--failure">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-right text-danger"><span class="card-box--close card-box__try--close "><i
+                        class="fa fa-remove fa-2x"></i></span></div>
+                <div class="advert-placeholder animated fadeInUp">
+                    <script type="text/javascript">
+                        var adx_adsvr_adspace_vAppRoot="https://ads.dochase.com/adx-dir-d/";
+                        var adx_adsvr_adspace_id="3176";
+                        var adx_size="728x90";
+                        var adx_custom="";
+                        var adx_nid="13";
+                    </script>
+                    <script type="text/javascript" src="https://j.dochase.com/adxads.js"></script>
+                    <!--<img src="images/jpg/adbanner.gif" alt="advert banner">-->
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="play_card__image-wrapper">
+                    <img src="/images/svg/sad.svg">
+                </div>
+
+            </div>
+            <div class="col-xs-12">
+                <div class="play-card__info">
+                    <h4 class="play-card__lead">You Lost the raffle draw</h4>
+                    <button class="button button-try">Try Again</button>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="advert-placeholder animated fadeInUp">
+                    <script type="text/javascript">
+                        var adx_adsvr_adspace_vAppRoot="https://ads.dochase.com/adx-dir-d/";
+                        var adx_adsvr_adspace_id="3176";
+                        var adx_size="728x90";
+                        var adx_custom="";
+                        var adx_nid="13";
+                    </script>
+                    <script type="text/javascript" src="https://j.dochase.com/adxads.js"></script>
+                    <!--<img src="images/jpg/adbanner.gif" alt="advert banner">-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- lost price play card ends here -->
+
+</body>
+<!-- javascript files  -->
+<script type="text/javascript" src="/js/jquery3.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/owl.carousel.min.js"></script>
+<script type="text/javascript" src="/js/infinity.min.js"></script>
+<script type="text/javascript" src="/js/jquery-ui.js"></script>
+<script type="text/javascript" src="/js/swiper.min.js"></script>
+<script type="text/javascript" src="/js/sweetalert.min.js"></script>
+<script type="text/javascript" src="/js/fingerprint.js"></script>
+<script type="text/javascript" src="/js/nprogress.js"></script>
+
+<script type="text/javascript" src="https://api.ravepay.co/flwv3-pug/getpaidx/api/flwpbf-inline.js"></script>
+<script type="text/javascript" src="/js/axios.min.js"></script>
+<script type="text/javascript" src="/js/service.js"></script>
+<script type="text/javascript" src="/js/kolobi.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+<script type="text/javascript" src="/js/kolorbi-router.js"></script>
+
+
+</html>
