@@ -6,6 +6,7 @@ import com.gsd.kolorbi.repository.RafflePlayedRepository;
 import com.gsd.kolorbi.repository.RaffleRepository;
 import com.gsd.kolorbi.service.NewsCrawlerService;
 import com.gsd.kolorbi.service.RaffleService;
+import com.gsd.kolorbi.service.impl.crawler.PunchNewsCrawlerServiceImpl;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,11 +55,16 @@ public class Scheduler {
         });
     }
 
-    @Scheduled(cron = "0 */5 * * * *", zone = "Africa/Lagos")
+    @Scheduled(cron = "0 */30 * * * *", zone = "Africa/Lagos")
     public void newsCrawlSchedule() {
+
         for(NewsCrawlerService newsCrawlerService:newsCrawlerServices){
             try {
-                newsCrawlerService.crawlWebsiteForNews();
+                System.out.println(newsCrawlerService.getClass().getName());
+                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.PunchNewsCrawlerServiceImpl"){
+                    newsCrawlerService.crawlWebsiteForNews();
+                }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

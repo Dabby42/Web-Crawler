@@ -3,18 +3,21 @@ package com.gsd.kolorbi.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gsd.kolorbi.config.GlobalValue;
 import com.gsd.kolorbi.enums.AdPlacement;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.apache.xpath.operations.Bool;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.Date;
 import java.util.List;
 
-@Document(collection = "News")
+@Document(collection = "articles")
 @ToString
 public class News {
 
@@ -30,6 +33,18 @@ public class News {
     @Getter
     @Setter
     String subject;
+
+    @Getter
+    @Setter
+    Date createdAt = new Date();
+
+    @Getter
+    @Setter
+    Date updatedAt = new Date();
+
+    @Getter
+    @Setter
+    Boolean isActive = true;
 
     @Getter
     @Setter
@@ -52,6 +67,10 @@ public class News {
     @Getter
     @Setter
     String category;
+
+    @Getter
+    @Setter
+    String sourceLogoURL;
 
     @JsonIgnore
     @Getter
