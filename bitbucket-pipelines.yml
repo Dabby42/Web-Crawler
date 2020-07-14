@@ -1,0 +1,14 @@
+# This is a sample build configuration for JavaScript.
+# Check our guides at https://confluence.atlassian.com/x/14UWN for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+pipelines:
+  default:
+    - step:
+        script: # Modify the commands below to build your repository.
+          - echo $SSH_PRIVATE_KEY > ~/.ssh/id_rsa.tmp
+          - base64 -d ~/.ssh/id_rsa.tmp > ~/.ssh/id_rsa
+          - chmod 600 ~/.ssh/id_rsa
+          - scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null target/kolorbi-0.0.1-RELEASE.jar ubuntu@$IP_ADDRESS:/var/www/crawler/kolorbi.jar
+          - ssh -o StrictHostKeyChecking=no ubuntu@167.114.2.198 "cd /var/www/crawler && sudo supervisorctl restart crawler && exit"
