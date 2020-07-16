@@ -96,6 +96,7 @@ public class PunchNewsCrawlerServiceImpl implements NewsCrawlerService {
     }
 
     private String getCategory(String s){
+
         switch(s){
             case "celebs":
                 return NewsCategory.CELEBRITY.name();
