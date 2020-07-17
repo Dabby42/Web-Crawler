@@ -33,68 +33,60 @@ public class AllAfricaNewsCrawlerServiceImpl implements NewsCrawlerService {
         Elements articleRows = homeDocument.select("div[id=home-section-b]");
 
         // Gets all the news for the day on the landing page of punch
-        for (int i = 0; i < articleRows.size(); i++) {
-            Element values = articleRows.get(i);
-            Elements children = values.children();
-            for (int j = 0; j < children.size(); j++) {
-                Element child = children.get(j);
-//                System.out.println(child.hasClass("title-header"));
-                if (child.hasClass("section")) {
-//                        hasClass("title-header")) {
-                    Elements childOne = child.children();
-                    for (int n = 0; n < childOne.size(); n++) {
-                        Element childOneValue = childOne.get(n);
-                        Elements childTwo = childOneValue.children();
-                        for (int m = 0; m < childTwo.size(); m++) {
-                            Element childTwoValue = childTwo.get(n);
-                            Elements childThree = childTwoValue.children();
-                            for (int p = 0; p < childThree.size(); p++) {
-                                Elements sections = childThree.get(p).children();
-//                                child = child.nextElementSibling();
-                                for (int k = 0; k < sections.size(); k++) {
-                                    String titleHeader = sections.get(k).children().get(0).select("a[class=widget-label]").text();
-                                    if (sections.get(k).hasClass("no-gutter")) {
-                                        Element value = sections.get(k);
-                                        int sectionsLength = sections.get(k).children().size();
-                                        for (int l = 0; l < sectionsLength - 1; l++) {
-                                            String link = value.children().get(l).children().select("a").attr("href");
-                                            String[] newsImageURLArray = value.children().get(l).children().get(0).select("img[class=img-responsive]").attr("srcset").split(",", 2);
-                                            String newsImageURL = newsImageURLArray[0];
-                                            Document newsDocument = Jsoup.connect(link).get();
-                                            Elements entryContent = newsDocument.getElementsByClass("topic");
+        for (Element article:articleRows){
+            if (article.hasClass("section")){
+                Elements articleChildren = article.children();
+                Element childOne = articleChildren.get(0);
+                Elements childOneChildren = childOne.children();
+                Element childTwo = childOneChildren.get(0);
+                Elements childTwoChildren = childTwo.children();
+                Element childThree = childTwoChildren.get(0);
+                Elements childThreeChildren = childThree.children();
+                Element childFour = childThreeChildren.get(0);
+                Elements childFourChildren = childFour.children();
+                for(Element child:childFourChildren){
+                    String titleHeader = child.children().get(0).children().get(0).text();
+                    System.out.println(titleHeader);
+                    if (child.hasClass("no-gutter")){
+                        Elements childList = child.children();
+                        for(Element linkContainer:childList){
+                            String articleLink = linkContainer.select("a[href]").attr("href");
+                            System.out.println(articleLink);
+                            linkContainer.children().get(0).children().get(0);
+                            String[] newsImageURLArray = linkContainer.select("img[img-responsive]").attr("srcset").split(",", 2);
+                            String newsImageURL = newsImageURLArray[0];
+                            System.out.println(newsImageURL);
+                            Document newsDocument = Jsoup.connect(articleLink).get();
+                            Elements entryContent = newsDocument.getElementsByClass("topic");
 
-                                            if (entryContent.size() > 0) {
-                                                String content = entryContent.select("p[class=user-select]").text();
-                                                String subject = entryContent.get(0).text();
-                                                String sourceURL = link;
+                            if (entryContent.size() > 0) {
+                                String content = entryContent.select("p[class=user-select]").text();
+                                System.out.println(content);
+                                String subject = entryContent.get(0).text();
 
 
-                                                News news = new News();
-                                                news.setSource("allafrica");
-                                                news.setCountry("NG");
-                                                news.setSourceURL(sourceURL);
-                                                news.setSubject(subject);
-                                                news.setCrawledDate(new Date());
-                                                news.setCategory(titleHeader);
-                                                news.setContents(getNewsContent(content));
-                                                news.setNewsImageURL(newsImageURL);
-                                                newss.add(news);
-                                                newsService.saveNews(news);
+                                News news = new News();
+                                news.setSource("allafrica");
+                                news.setCountry("NG");
+                                news.setSourceURL(articleLink);
+                                news.setSubject(subject);
+                                news.setCrawledDate(new Date());
+                                news.setCategory(titleHeader);
+                                news.setContents(getNewsContent(content));
+                                news.setNewsImageURL(newsImageURL);
+                                newss.add(news);
+                                newsService.saveNews(news);
 
-                                            }
-                                        }
-                                    }
-                                }
                             }
-
-                        }
+                        };
                     }
                 }
             }
         }
+
+
     }
 
-    @org.jetbrains.annotations.NotNull
     private List<String> getNewsContent(String content) throws IOException {
         List<String> contents = new ArrayList<>();
         contents.add(content);
