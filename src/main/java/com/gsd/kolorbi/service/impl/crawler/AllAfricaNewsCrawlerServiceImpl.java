@@ -30,68 +30,89 @@ public class AllAfricaNewsCrawlerServiceImpl implements NewsCrawlerService {
         List<News> newss = new ArrayList<>();
 
         Document homeDocument = Jsoup.connect(source).get();
-        Elements articleRows = homeDocument.select("div[id=home-section-b]");
+        Elements articleRows = homeDocument.getElementsByClass("section generic current-boxes");
 
         // Gets all the news for the day on the landing page of punch
         for (Element article:articleRows){
-            if (article.hasClass("section")){
-                Elements articleChildren = article.children();
-                Element childOne = articleChildren.get(0);
-                Elements childOneChildren = childOne.children();
-                Element childTwo = childOneChildren.get(0);
-                Elements childTwoChildren = childTwo.children();
-                Element childThree = childTwoChildren.get(0);
-                Elements childThreeChildren = childThree.children();
-                Element childFour = childThreeChildren.get(0);
-                Elements childFourChildren = childFour.children();
-                for(Element child:childFourChildren){
-                    String titleHeader = child.children().get(0).children().get(0).text();
-                    System.out.println(titleHeader);
-                    if (child.hasClass("no-gutter")){
-                        Elements childList = child.children();
-                        for(Element linkContainer:childList){
-                            String articleLink = linkContainer.select("a[href]").attr("href");
-                            System.out.println(articleLink);
-                            linkContainer.children().get(0).children().get(0);
-                            String[] newsImageURLArray = linkContainer.select("img[img-responsive]").attr("srcset").split(",", 2);
-                            String newsImageURL = newsImageURLArray[0];
-                            System.out.println(newsImageURL);
-                            Document newsDocument = Jsoup.connect(articleLink).get();
-                            Elements entryContent = newsDocument.getElementsByClass("topic");
+            Elements contents = article.child(0).children();
+            for (Element row:contents){
+                Element column = row.children().first();
+                if(column != null && !column.hasClass("column float-right")){
+                    Elements features = column.children();
+                    if(features.size() > 0){
+                        Element feature = features.first();
+                        Elements featured = feature.children();
+                        String category = "";
+                        for (Element newsz:featured){
 
-                            if (entryContent.size() > 0) {
-                                String content = entryContent.select("p[class=user-select]").text();
-                                System.out.println(content);
-                                String subject = entryContent.get(0).text();
+                            if(newsz.hasClass("row no-gutter items")){
+                                Elements items = newsz.children();
+                                for (Element item:items){
+                                    System.out.println(item.child(0).attr("href"));
+                                    System.out.println(item.child(0).attr("title"));
+                                    String link = "https://allafrica.com"+item.child(0).attr("href");
+                                    Document newsDocument = Jsoup.connect(link).get();
+                                    News news = new News();
+                                    news.setSource("allafrica.com");
+                                    news.setCountry("NG");
+                                    news.setSourceURL(link);
+                                    news.setSubject(item.child(0).attr("title"));
+                                    news.setSourceLogoURL("https://cdn03.allafrica.com/static/images/structure/aa-logo.png");
+                                    news.setCrawledDate(new Date());
+                                    news.setCategory(category);
+                                    news.setContents(getNewsContent(newsDocument));
+                                    news.setNewsImageURL(getNewsImageURL(newsDocument));
+                                    newss.add(news);
+                                    newsService.saveNews(news);
 
+                                }
 
-                                News news = new News();
-                                news.setSource("allafrica");
-                                news.setCountry("NG");
-                                news.setSourceURL(articleLink);
-                                news.setSubject(subject);
-                                news.setCrawledDate(new Date());
-                                news.setCategory(titleHeader);
-                                news.setContents(getNewsContent(content));
-                                news.setNewsImageURL(newsImageURL);
-                                newss.add(news);
-                                newsService.saveNews(news);
-
+                            }else{
+                                if(newsz.hasClass("row")){
+                                    category = newsz.text();
+                                }
                             }
-                        };
+
+                        }
+
                     }
+
                 }
+
             }
+
+
         }
 
 
     }
 
-    private List<String> getNewsContent(String content) throws IOException {
+    private List<String> getNewsContent(Document newsDocument) throws IOException {
         List<String> contents = new ArrayList<>();
-        contents.add(content);
+        Elements elements = newsDocument.getElementsByClass("topic");
 
+        for(Element el:elements){
+            for(Element tag:el.children()){
+                if(tag.is("p")){
+                    contents.add(tag.text());
+                }
+            }
+        }
         return contents;
+    }
+
+    private String getNewsImageURL(Document newsDocument) throws IOException {
+        String url = "";
+        Element element = newsDocument.getElementsByClass("section featured-story").first();
+
+        Element content = element.child(0);
+
+        for(Element ele:content.children()){
+            if(ele.is("img")){
+                url = ele.attr("src");
+            }
+        }
+        return url;
     }
 
 
