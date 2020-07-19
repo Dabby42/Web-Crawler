@@ -93,6 +93,7 @@ public class PunchNewsCrawlerServiceImpl implements NewsCrawlerService {
 
         }
         return link;
+
     }
 
     private String getCategory(String s){
