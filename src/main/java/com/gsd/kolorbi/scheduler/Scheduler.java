@@ -64,12 +64,13 @@ public class Scheduler {
                 if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.PunchNewsCrawlerServiceImpl"){
                     newsCrawlerService.crawlWebsiteForNews();
                 }
-                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.TechPointNewsCrawlerServiceImpl"){
-                    newsCrawlerService.crawlWebsiteForNews();
-                }
                 if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.AllAfricaNewsCrawlerServiceImpl"){
                     newsCrawlerService.crawlWebsiteForNews();
                 }
+                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.TechPointNewsCrawlerServiceImpl"){
+                    newsCrawlerService.crawlWebsiteForNews();
+                }
+
 
             } catch (Exception e) {
                 e.printStackTrace();
