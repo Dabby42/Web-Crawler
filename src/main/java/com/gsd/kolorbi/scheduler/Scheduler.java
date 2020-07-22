@@ -61,7 +61,7 @@ public class Scheduler {
         for(NewsCrawlerService newsCrawlerService:newsCrawlerServices){
             try {
                 System.out.println(newsCrawlerService.getClass().getName());
-                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.PunchNewsCrawlerServiceImpl"){
+                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.news24NewsCrawlerServiceImpl"){
                     newsCrawlerService.crawlWebsiteForNews();
                 }
                 if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.AllAfricaNewsCrawlerServiceImpl"){
