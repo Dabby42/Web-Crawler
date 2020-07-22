@@ -48,12 +48,13 @@ public class TechPointNewsCrawlerServiceImpl implements NewsCrawlerService {
                         System.out.println(header.size());
 
                         if (header.size() > 0) {
-                            Elements entryContent = newsDocument.getElementsByClass("post-content-container").get(0).children();
+                            Elements entryContent = newsDocument.getElementsByClass("post-content entry-content cf");
                             String subject = header.get(0).text();
                             String sourceURL = link;
                             String titleHeader = title.get(0).text();
                             String newsImageURL = getNewsImageURL(newsDocument);
                             List<String> content = getNewsContents(entryContent);
+//                            System.out.println(content);
 
                             News news = new News();
                             news.setSource("techpoint.africa");
@@ -102,15 +103,17 @@ public class TechPointNewsCrawlerServiceImpl implements NewsCrawlerService {
         return link;
 
     }
+
     public List<String> getNewsContents(Elements newsContent) throws IOException {
         List<String> contents = new ArrayList<>();
-    //    List<String> filteredContents = new ArrayList<>();
+        for(Element ncontainer:newsContent){
+            for(Element ncontent:ncontainer.children()){
+                if(ncontent.select("p") != null){
 
-        for(Element ncontent:newsContent){
-            if(!ncontent.select("p").text().equals(null)){
-
-                contents.add(ncontent.text());
+                    contents.add(ncontent.select("p").text());
+                }
             }
+
 
         }
 
