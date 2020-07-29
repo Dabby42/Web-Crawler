@@ -17,7 +17,7 @@ pipelines:
     master:
       - step:
           script: # Modify the commands below to build your repository.
-            - echo $SSH_PRIVATE_KEY > ~/.ssh/id_rsa.tmp
+            - echo $SSH_PRIVATE_KEY_PRODUCTION > ~/.ssh/id_rsa.tmp
             - base64 -d ~/.ssh/id_rsa.tmp > ~/.ssh/id_rsa
             - chmod 600 ~/.ssh/id_rsa
             - scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null target/kolorbi-0.0.1-RELEASE.jar ubuntu@$IP_ADDRESS:/var/www/crawler/kolorbi.jar
