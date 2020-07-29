@@ -20,6 +20,6 @@ pipelines:
             - echo $SSH_PRIVATE_KEY_PRODUCTION > ~/.ssh/id_rsa.tmp
             - base64 -d ~/.ssh/id_rsa.tmp > ~/.ssh/id_rsa
             - chmod 600 ~/.ssh/id_rsa
-            - scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null target/kolorbi-0.0.1-RELEASE.jar ubuntu@$IP_ADDRESS:/var/www/crawler/kolorbi.jar
+            - scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null target/kolorbi-0.0.1-RELEASE.jar ubuntu@$IP_ADDRESS_PRODUCTION:/var/www/crawler/kolorbi.jar
             - ssh -o StrictHostKeyChecking=no ubuntu@$IP_ADDRESS_PRODUCTION "cd /var/www/crawler && sudo supervisorctl restart crawler && exit"
 
