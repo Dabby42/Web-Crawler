@@ -38,7 +38,7 @@ public class PunchNewsCrawlerServiceImpl implements NewsCrawlerService {
             Elements children = values.children();
             for(int j = 0; j < children.size(); j++){
                 Element child = children.get(j);
-//                System.out.println(child.hasClass("title-header"));
+                System.out.println(child.hasClass("title-header"));
                 if(child.hasClass("title-header")) {
                     String titleHeader = child.text();
                     while (child.nextElementSibling().hasClass("cat-sections")){
