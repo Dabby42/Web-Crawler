@@ -29,12 +29,11 @@ public class TechPointNewsCrawlerServiceImpl implements NewsCrawlerService {
     public void crawlWebsiteForNews() throws Exception {
         List<News> newss = new ArrayList<>();
         Document homeDocument = Jsoup.connect(source).get();
-
         Elements articleRows = homeDocument.select("div.row");
         for(Element row:articleRows){
 
-            Elements items = row.children();
-            for(Element item:items){
+            Elements items = row.children();//creating an array
+            for(Element item:items){// looping through elements in the array
 
                 if (item.hasClass("small-12 medium-4 columns")){
                     Elements itm = item.children();
@@ -112,6 +111,7 @@ public class TechPointNewsCrawlerServiceImpl implements NewsCrawlerService {
 
                     contents.add(ncontent.select("p").text());
                 }
+
             }
 
 

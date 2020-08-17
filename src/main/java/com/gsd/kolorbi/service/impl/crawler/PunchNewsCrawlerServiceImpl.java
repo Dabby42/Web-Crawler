@@ -49,7 +49,7 @@ public class PunchNewsCrawlerServiceImpl implements NewsCrawlerService {
                             Document newsDocument = Jsoup.connect(link).get();
                             Elements imageTags = newsDocument.getElementsByClass("post_featured_image");
 
-                            System.out.println(imageTags.size());
+//                            System.out.println(imageTags.size());
 
                             if (imageTags.size() > 0) {
                                 Elements entryContent = newsDocument.getElementsByClass("entry-content").get(0).children();

@@ -92,12 +92,19 @@ public class news24NewsCrawlerServiceImpl implements NewsCrawlerService {
     }
     public List<String> getNewsContents(Elements newsContent) throws IOException {
         List<String> contents = new ArrayList<>();
-    //    List<String> filteredContents = new ArrayList<>();
+        //    List<String> filteredContents = new ArrayList<>();
 
-        for(Element ncontent:newsContent){
-            if(!ncontent.select("p").text().equals(null)){
+        for(Element ncontainer:newsContent){
+//            if(!ncontent.select("p").text().equals(null)){
+//
+//                contents.add(ncontent.text());
+//            }
+            for(Element ncontent:ncontainer.children()){
+                if(ncontent.select("p") != null){
 
-                contents.add(ncontent.text());
+                    contents.add(ncontent.select("p").text());
+                }
+
             }
 
         }
