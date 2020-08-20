@@ -55,22 +55,27 @@ public class Scheduler {
         });
     }
 
-    @Scheduled(cron = "0 */30 * * * *", zone = "Africa/Lagos")
+    @Scheduled(cron = "0 */1 * * * *", zone = "Africa/Lagos")
     public void newsCrawlSchedule() {
 
         for(NewsCrawlerService newsCrawlerService:newsCrawlerServices){
             try {
                 System.out.println(newsCrawlerService.getClass().getName());
-                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.PunchNewsCrawlerServiceImpl"){
-                    newsCrawlerService.crawlWebsiteForNews();
-                }
-                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.news24NewsCrawlerServiceImpl"){
+                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.YouTubeNewsCrawlerServiceImpl"){
                     newsCrawlerService.crawlWebsiteForNews();
                 }
 
-                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.TechPointNewsCrawlerServiceImpl"){
-                    newsCrawlerService.crawlWebsiteForNews();
-                }
+//                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.PunchNewsCrawlerServiceImpl"){
+//                    newsCrawlerService.crawlWebsiteForNews();
+//                }
+//
+//                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.news24NewsCrawlerServiceImpl"){
+//                    newsCrawlerService.crawlWebsiteForNews();
+//                }
+//
+//                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.TechPointNewsCrawlerServiceImpl"){
+//                    newsCrawlerService.crawlWebsiteForNews();
+//                }
 
 
             } catch (Exception e) {
