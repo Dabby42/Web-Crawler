@@ -36,7 +36,7 @@ public class YouTubeNewsCrawlerServiceImpl implements NewsCrawlerService {
 
         getFeedsFromYoutube("");
         getFeedsFromYoutube("comedy");
-        getFeedsFromYoutube("politics");
+//        getFeedsFromYoutube("politics");
 
     }
 
