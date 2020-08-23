@@ -47,36 +47,41 @@ public class LIBNewsCrawlerServiceImpl implements NewsCrawlerService {
             news.setSourceURL(articleBlock.select("figure h1 a").attr("href"));
             news.setSubject(articleBlock.select("figure h1 a").text());
             news.setCrawledDate(new Date());
-            news.setNewsImageURL(articleBlock.select("figure div img").attr("src"));
+            news.setSourceLogoURL("https://www.lindaikejisblog.com/img/favicon.png");
             news.setCategory(NewsCategory.BLOG.name());
-            news.setContents(getNewsContents(news.getSourceURL()));
+            Document newsDocument = Jsoup.connect(news.getSourceURL()).get();
+            news.setNewsImageURL(getNewsImageURL(newsDocument));
+
+            news.setContents(getNewsContents(newsDocument));
 
             newsService.saveNews(news);
         }
     }
 
-    private List<String> getNewsContents(String newsURL) throws IOException {
+    private String getNewsImageURL(Document newsDocument) throws IOException {
+        String url = "";
+        for(Element ad:newsDocument.select("summary p img")){
+            url = ad.attr("src");
+            return ad.attr("src");
+        }
+
+        return url;
+    }
+
+    private List<String> getNewsContents(Document newsDocument) throws IOException {
         List<String> contents = new ArrayList<>();
-        Document newsDocument = Jsoup.connect(newsURL).get();
-        for(Element ad:newsDocument.select("ins")){
-            TextNode textNode = new TextNode("{{K_AD}}");
-            ad.replaceWith(textNode);
-            /*ad.attr("data-ad-client","{{_K_AD_CLIENT_}}");
-            ad.attr("data-ad-slot","{{_K_AD_SLOT_}}");*/
-        }
-        Element newsBlock = newsDocument.select("article.big_story summary").get(0);
-        String content = newsBlock.html().replaceAll("src=\"//www.instagram.com/embed.js\"", "src=\"https://www.instagram.com/embed.js\"");
-        contents.add(content);
+        for(Element ad:newsDocument.select("summary")){
+            for(Element news:ad.children()){
 
-        Element commentBlock = newsDocument.select("div.comments_area").get(0);
-        for(Element img:commentBlock.select("img")){
-            img.attr("style", "width:40px");
-        }
-        for(Element commentArea:commentBlock.select("div.comment_field_area")){
-            commentArea.html("");
-        }
+                if(news.select("p") != null){
+                    if(news.select("p").text().length() > 0){
+                        contents.add(news.select("p").text());
+                        contents.add("");
+                    }
 
-        contents.add(commentBlock.html());
+                }
+            }
+        }
 
         return contents;
     }
