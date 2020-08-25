@@ -64,11 +64,11 @@ public class Scheduler {
                 if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.PunchNewsCrawlerServiceImpl"){
                     newsCrawlerService.crawlWebsiteForNews();
                 }
-                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.news24NewsCrawlerServiceImpl"){
+                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.TechPointNewsCrawlerServiceImpl"){
                     newsCrawlerService.crawlWebsiteForNews();
                 }
 
-                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.TechPointNewsCrawlerServiceImpl"){
+                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.VanguardNewsCrawlerServiceImpl"){
                     newsCrawlerService.crawlWebsiteForNews();
                 }
 
