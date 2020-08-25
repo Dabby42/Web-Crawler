@@ -95,14 +95,11 @@ public class news24NewsCrawlerServiceImpl implements NewsCrawlerService {
         //    List<String> filteredContents = new ArrayList<>();
 
         for(Element ncontainer:newsContent){
-//            if(!ncontent.select("p").text().equals(null)){
-//
-//                contents.add(ncontent.text());
-//            }
             for(Element ncontent:ncontainer.children()){
                 if(ncontent.select("p") != null){
 
                     contents.add(ncontent.select("p").text());
+                    contents.add("");
                 }
 
             }

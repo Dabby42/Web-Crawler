@@ -78,18 +78,6 @@ public class VanguardNewsCrawlerServiceImpl  implements NewsCrawlerService {
 
         Element newsBlock = newsDocument.select("article").get(0).selectFirst("div.entry-content");
 
-//        Elements shareLinks = newsBlock.select("div[class=sharer]");
-//        for (Element shareLink : shareLinks) {
-//            shareLink.html("");
-//        }
-
-//        for (Element ad : newsBlock.select("ins")) {
-//            TextNode textNode = new TextNode("{{K_AD}}");
-//            ad.replaceWith(textNode);
-//            /*ad.attr("data-ad-client","{{_K_AD_CLIENT_}}");
-//            ad.attr("data-ad-slot","{{_K_AD_SLOT_}}");*/
-//        }
-
         for(Element ncontent:newsBlock.children()){
             if(ncontent.select("p") != null){
                 contents.add(ncontent.select("p").text());
@@ -101,15 +89,6 @@ public class VanguardNewsCrawlerServiceImpl  implements NewsCrawlerService {
 
         return contents;
 
-//        for (Element link : newsBlock.select("a[href]")) {
-//            if(link.attr("href").contains("vanguardngr.com")){
-//                link.attr("href", "#");
-//            }
-//        }
-//        for (Element element : newsBlock.children()) {
-//            contents.add(element.html());
-//            //System.out.println(element.html());
-//        }
 
     }
 }
