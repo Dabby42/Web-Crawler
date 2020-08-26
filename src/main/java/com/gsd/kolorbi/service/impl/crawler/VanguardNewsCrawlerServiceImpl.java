@@ -80,11 +80,13 @@ public class VanguardNewsCrawlerServiceImpl  implements NewsCrawlerService {
 
         for(Element ncontent:newsBlock.children()){
             if(ncontent.select("p") != null){
-                contents.add(ncontent.select("p").text());
-                contents.add("");
+                System.out.println(ncontent.select("p").text().trim() +" "+ncontent.select("p").text().trim().length());
+                if(ncontent.select("p").text().trim().length() > 0){
+                    contents.add(ncontent.select("p").text().trim());
+                    contents.add("");
+                }
+
             }
-
-
         }
 
         return contents;

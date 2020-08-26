@@ -5,14 +5,14 @@
 # You can specify a custom docker image from Docker Hub as your build environment.
 pipelines:
   branches:
-    dev:
-      - step:
-          script: # Modify the commands below to build your repository.
-            - echo $SSH_PRIVATE_KEY > ~/.ssh/id_rsa.tmp
-            - base64 -d ~/.ssh/id_rsa.tmp > ~/.ssh/id_rsa
-            - chmod 600 ~/.ssh/id_rsa
-            - scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null target/kolorbi-0.0.1-RELEASE.jar ubuntu@$IP_ADDRESS:/var/www/crawler/kolorbi.jar
-            - ssh -o StrictHostKeyChecking=no ubuntu@$IP_ADDRESS "cd /var/www/crawler && sudo supervisorctl restart crawler && exit"
+#    dev:
+#      - step:
+#          script: # Modify the commands below to build your repository.
+#            - echo $SSH_PRIVATE_KEY > ~/.ssh/id_rsa.tmp
+#            - base64 -d ~/.ssh/id_rsa.tmp > ~/.ssh/id_rsa
+#            - chmod 600 ~/.ssh/id_rsa
+#            - scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null target/kolorbi-0.0.1-RELEASE.jar ubuntu@$IP_ADDRESS:/var/www/crawler/kolorbi.jar
+#            - ssh -o StrictHostKeyChecking=no ubuntu@$IP_ADDRESS "cd /var/www/crawler && sudo supervisorctl restart crawler && exit"
 
     master:
       - step:
