@@ -34,23 +34,40 @@ public class JANewsCrawlerServiceImpl implements NewsCrawlerService {
         for (int i = articleRows.size() - 1; i >= 0; i--) {
             News news = new News();
             Element articleBlock = articleRows.get(i);
+            String sourceURL = articleBlock.select("h2[class=entry-title p_post_titles_font] a").attr("href");
+            Document newsDocument = Jsoup.connect(sourceURL).get();
+            String newsImageURL = getNewsImageURL(newsDocument);
+            List<String> newsContent = getNewsContents(newsDocument);
 
             news.setSource("jamilakyari.com");
             news.setCountry("NG");
-            news.setSourceURL(articleBlock.select("h2[class=entry-title p_post_titles_font] a").attr("href"));
-            news.setNewsImageURL(articleBlock.select("div[class=floated_summary_left] a").attr("href"));
+            news.setSourceURL(sourceURL);
+            news.setNewsImageURL(newsImageURL);
+            news.setSourceLogoURL("https://jamilakyari.com/wp-content/uploads/2019/06/cropped-JK-11.24.04-PM-32x32.png");
             news.setSubject(articleBlock.select("h2[class=entry-title p_post_titles_font] a").text());
             news.setCrawledDate(new Date());
             news.setCategory(articleBlock.select("div[class=entry-meta pipdig_meta] a").text());
-            news.setContents(getNewsContents(news.getSourceURL()));
+            news.setContents(newsContent);
             newss.add(news);
             newsService.saveNews(news);
         }
     }
 
-    public List<String> getNewsContents(String newsURL) throws IOException {
+    private String getNewsImageURL(Document newsDocument){
+        Elements meta = newsDocument.select("meta");
+        String link = "";
+        for(int l = 0; l < meta.size(); l++){
+            if(meta.get(l).attr("property").toString().equals("og:image")){
+                link = meta.get(l).attr("content");
+            }
+
+        }
+        return link;
+
+    }
+
+    public List<String> getNewsContents(Document newsDocument) throws IOException {
         List<String> contents = new ArrayList<>();
-        Document newsDocument = Jsoup.connect(newsURL).get();
 
         Element newsBlock = newsDocument.select("article").get(0).selectFirst("div.clearfix.entry-content");
 
