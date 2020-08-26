@@ -108,12 +108,10 @@ public class TechPointNewsCrawlerServiceImpl implements NewsCrawlerService {
         for(Element ncontainer:newsContent){
             for(Element ncontent:ncontainer.children()){
                 if(ncontent.select("p") != null){
-
                     contents.add(ncontent.select("p").text());
+
                 }
-
             }
-
 
         }
 

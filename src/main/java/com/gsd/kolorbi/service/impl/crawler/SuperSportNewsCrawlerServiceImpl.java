@@ -23,14 +23,43 @@ public class SuperSportNewsCrawlerServiceImpl implements NewsCrawlerService {
     @Autowired
     NewsService newsService;
 
-    private final String source = "https://supersport.com/news";
+    private final String source = "https://www.vanguardngr.com/category/trending/";
 
     @Override
     public void crawlWebsiteForNews() throws Exception {
         List<News> newss = new ArrayList<>();
         Document homeDocument = Jsoup.connect(source).get();
-        Elements articleRows = homeDocument.getElementsByClass("row is-mobile");
-        System.out.println(articleRows.outerHtml());
+        Elements articleRows = homeDocument.select("div.content-area.large-6.medium-8.small-12.column");
+//        System.out.println(articleRows.outerHtml());
+
+        for (Element row : articleRows) {
+            Elements items = row.children();
+            for (Element item : items) {
+                if (item.hasClass("site-main clearfix")){
+                    Elements itm = item.children();
+                    for (Element elmt : itm) {
+                        Elements source = elmt.children();
+                        for (Element elm : source) {
+                            String link = elm.children().select("a.rtp-thumb").attr("href");
+
+                            System.out.println(link);
+
+                            Document newsDocument = Jsoup.connect(link).get();
+                            Elements titleHeader = newsDocument.select("div.rtp-content");
+//                            main.site-main.clearfix
+                            System.out.println(titleHeader.outerHtml());
+//                            Elements entryContent = newsDocument.getElementsByClass("entry-content");
+//                            String subject = titleHeader.select("h1.entry-title").text();
+//
+//                            String newsImageURL = getNewsImageURL(newsDocument);
+                        }
+                    }
+
+                }
+            }
+
+        }
+
 //        for(Element row:articleRows){
 
 //            Elements items = row.children();//creating an array

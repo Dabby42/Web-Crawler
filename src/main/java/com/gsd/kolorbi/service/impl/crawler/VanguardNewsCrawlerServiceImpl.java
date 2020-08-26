@@ -30,6 +30,7 @@ public class VanguardNewsCrawlerServiceImpl  implements NewsCrawlerService {
         List<News> newss = new ArrayList<>();
         Document homeDocument = Jsoup.connect(source).get();
         Elements articleRows = homeDocument.select("article");
+//        System.out.println(articleRows.outerHtml());
 
         for (int i = articleRows.size() - 1; i >= 0; i--) {
             News news = new News();
@@ -37,6 +38,7 @@ public class VanguardNewsCrawlerServiceImpl  implements NewsCrawlerService {
 
             news.setSource("vanguardngr.com");
             news.setCountry("NG");
+            news.setSourceLogoURL("https://cdn.vanguardngr.com/wp-content/uploads/2016/06/vanguardlogo.png");
             news.setSourceURL(articleBlock.select("h2[class=entry-title] a").attr("href"));
             news.setNewsImageURL(articleBlock.select("a[class=rtp-thumb]").get(0).select("img").get(0).attr("data-lazy-src"));
             news.setSubject(articleBlock.select("h2[class=entry-title] a").html());
@@ -76,28 +78,19 @@ public class VanguardNewsCrawlerServiceImpl  implements NewsCrawlerService {
 
         Element newsBlock = newsDocument.select("article").get(0).selectFirst("div.entry-content");
 
-        Elements shareLinks = newsBlock.select("div[class=sharer]");
-        for (Element shareLink : shareLinks) {
-            shareLink.html("");
-        }
+        for(Element ncontent:newsBlock.children()){
+            if(ncontent.select("p") != null){
+                System.out.println(ncontent.select("p").text().trim() +" "+ncontent.select("p").text().trim().length());
+                if(ncontent.select("p").text().trim().length() > 0){
+                    contents.add(ncontent.select("p").text().trim());
+                    contents.add("");
+                }
 
-        for (Element ad : newsBlock.select("ins")) {
-            TextNode textNode = new TextNode("{{K_AD}}");
-            ad.replaceWith(textNode);
-            /*ad.attr("data-ad-client","{{_K_AD_CLIENT_}}");
-            ad.attr("data-ad-slot","{{_K_AD_SLOT_}}");*/
-        }
-
-        for (Element link : newsBlock.select("a[href]")) {
-            if(link.attr("href").contains("vanguardngr.com")){
-                link.attr("href", "#");
             }
-        }
-        for (Element element : newsBlock.children()) {
-            contents.add(element.html());
-            //System.out.println(element.html());
         }
 
         return contents;
+
+
     }
 }
