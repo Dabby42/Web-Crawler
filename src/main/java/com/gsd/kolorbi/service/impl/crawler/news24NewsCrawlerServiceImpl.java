@@ -48,6 +48,9 @@ public class news24NewsCrawlerServiceImpl implements NewsCrawlerService {
                         Document newsDocument = Jsoup.connect(sourceURL).get();
                         Elements titleHeader = newsDocument.select("div.article.tf-lhs-col");
                         Elements entryContent = newsDocument.getElementsByClass("article__body");
+                        if(entryContent.size() == 0){
+                            continue;
+                        }
                         String subject = titleHeader.select("h1.article__title").text();
                         String newsImageURL = getNewsImageURL(newsDocument);
                         List<String> content = getNewsContents(entryContent);
@@ -57,7 +60,7 @@ public class news24NewsCrawlerServiceImpl implements NewsCrawlerService {
                         news.setCountry("NG");
                         news.setSourceURL(sourceURL);
                         news.setSubject(subject);
-                        news.setSourceLogoURL("https://cdn.24.co.za/files/Cms/General/d/10142/b33ddf2fb6224fe9b22ddfa9ac4202a8.svg");
+                        news.setSourceLogoURL("https://res.cloudinary.com/tribenigeria-com/image/upload/v1598424635/b33ddf2fb6224fe9b22ddfa9ac4202a8_g1lvfn.png");
                         news.setCrawledDate(new Date());
                         news.setCategory(category);
                         news.setContents(content);
@@ -97,9 +100,10 @@ public class news24NewsCrawlerServiceImpl implements NewsCrawlerService {
         for(Element ncontainer:newsContent){
             for(Element ncontent:ncontainer.children()){
                 if(ncontent.select("p") != null){
-
-                    contents.add(ncontent.select("p").text());
-                    contents.add("");
+                    if(ncontent.select("p").text().trim().length() > 0){
+                        contents.add(ncontent.select("p").text().trim());
+                        contents.add("");
+                    }
                 }
 
             }

@@ -29,7 +29,7 @@ public class JANewsCrawlerServiceImpl implements NewsCrawlerService {
         List<News> newss = new ArrayList<>();
         Document homeDocument = Jsoup.connect(source).get();
         Elements articleRows = homeDocument.select("article");
-        System.out.println(articleRows.outerHtml());
+
 
         for (int i = articleRows.size() - 1; i >= 0; i--) {
             News news = new News();
@@ -73,8 +73,10 @@ public class JANewsCrawlerServiceImpl implements NewsCrawlerService {
 
         for(Element ncontent:newsBlock.children()){
             if(ncontent.select("p") != null){
-                contents.add(ncontent.select("p").text());
-                contents.add("");
+                if(ncontent.select("p").text().trim().length() > 0){
+                    contents.add(ncontent.select("p").text().trim());
+                    contents.add("");
+                }
             }
 
 
