@@ -73,9 +73,9 @@ public class Scheduler {
                     newsCrawlerService.crawlWebsiteForNews();
                 }
 
-                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.news24NewsCrawlerServiceImpl"){
-                    newsCrawlerService.crawlWebsiteForNews();
-                }
+//                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.news24NewsCrawlerServiceImpl"){
+//                    newsCrawlerService.crawlWebsiteForNews();
+//                }
                 if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.JANewsCrawlerServiceImpl"){
                     newsCrawlerService.crawlWebsiteForNews();
                 }
@@ -84,6 +84,9 @@ public class Scheduler {
                     newsCrawlerService.crawlWebsiteForNews();
                 }
                 if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.YouTubeNewsCrawlerServiceImpl"){
+                    newsCrawlerService.crawlWebsiteForNews();
+                }
+                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.DailyPostNewsCrawlerServiceImpl"){
                     newsCrawlerService.crawlWebsiteForNews();
                 }
 
