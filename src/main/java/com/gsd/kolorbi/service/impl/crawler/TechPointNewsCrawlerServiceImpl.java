@@ -29,6 +29,7 @@ public class TechPointNewsCrawlerServiceImpl implements NewsCrawlerService {
     public void crawlWebsiteForNews() throws Exception {
         List<News> newss = new ArrayList<>();
         Document homeDocument = Jsoup.connect(source).get();
+//        System.out.println(homeDocument);
         Elements articleRows = homeDocument.select("div.row");
         for(Element row:articleRows){
 
@@ -39,21 +40,22 @@ public class TechPointNewsCrawlerServiceImpl implements NewsCrawlerService {
                     Elements itm = item.children();
                     if (itm.size() > 0){
                         String link = itm.first().child(0).attr("href");
-                        System.out.println(link);
+
                         Document newsDocument = Jsoup.connect(link).get();
                         Elements src = newsDocument.getElementsByClass("small-12 medium-8 columns");
                         Elements header = newsDocument.getElementsByClass("entry-title");
-                        Elements title = newsDocument.getElementsByClass("post-subjects");
-                        System.out.println(header.size());
+                        Elements title = newsDocument.select("header.post-title h6");
+                        System.out.println(title);
 
                         if (header.size() > 0) {
                             Elements entryContent = newsDocument.getElementsByClass("post-content entry-content cf");
                             String subject = header.get(0).text();
                             String sourceURL = link;
+
                             String titleHeader = title.get(0).text();
                             String newsImageURL = getNewsImageURL(newsDocument);
                             List<String> content = getNewsContents(entryContent);
-//                            System.out.println(content);
+                            System.out.println(content);
 
                             News news = new News();
                             news.setSource("techpoint.africa");
@@ -99,6 +101,7 @@ public class TechPointNewsCrawlerServiceImpl implements NewsCrawlerService {
             }
 
         }
+        System.out.println(link);
         return link;
 
     }
