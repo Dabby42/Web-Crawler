@@ -55,7 +55,7 @@ public class Scheduler {
         });
     }
 
-    @Scheduled(cron = "0 */1 * * * *", zone = "Africa/Lagos")
+    @Scheduled(cron = "0 */59 * * * *", zone = "Africa/Lagos")
     public void newsCrawlSchedule() {
 
         for(NewsCrawlerService newsCrawlerService:newsCrawlerServices){
