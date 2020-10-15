@@ -28,7 +28,7 @@ public class IndianExpressCrawlerServiceImpl implements NewsCrawlerService {
         List<News> newss = new ArrayList<>();
         Document homeDocument = Jsoup.connect(source).get();
         Elements articleRows = homeDocument.select("div.articles");
-        System.out.println(articleRows.outerHtml());
+//        System.out.println(articleRows.outerHtml());
 
         for (int i = articleRows.size() - 1; i >= 0; i--) {
             News news = new News();
@@ -39,7 +39,7 @@ public class IndianExpressCrawlerServiceImpl implements NewsCrawlerService {
             String newsImageURL = getNewsImageURL(newsDocument);
             List<String> newsContent = getNewsContents(entryContent);
             Elements categoryRows = newsDocument.select("ol[class=m-breadcrumb] li");
-            for (int j = 1; j < categoryRows.size() - 2; j++) {
+            for (int j = 1; j <= categoryRows.size() - 2; j++) {
                 Element categoryBlock = categoryRows.get(j);
                 String category = categoryBlock.select("a").text();
                 news.setCategory(category);
@@ -49,7 +49,7 @@ public class IndianExpressCrawlerServiceImpl implements NewsCrawlerService {
             news.setSourceLogoURL("https://images.indianexpress.com/2020/05/iPhone-SE-2020-fb.jpg");
             news.setSourceURL(sourceURL);
             news.setNewsImageURL(newsImageURL);
-            news.setSubject(newsDocument.select("div[class=heading-part] h1[class=native_story_title]").text());
+            news.setSubject(newsDocument.select("div[class=heading-part] h1").text());
             news.setCrawledDate(new Date());
             news.setContents(newsContent);
             newss.add(news);
