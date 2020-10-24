@@ -95,9 +95,9 @@ public class Scheduler {
                 }
 
 
-                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.YouTubeNewsCrawlerServiceImpl"){
-                    newsCrawlerService.crawlWebsiteForNews();
-                }
+//                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.YouTubeNewsCrawlerServiceImpl"){
+//                    newsCrawlerService.crawlWebsiteForNews();
+//                }
 
 
 
