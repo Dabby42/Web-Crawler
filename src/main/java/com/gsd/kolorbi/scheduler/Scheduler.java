@@ -66,6 +66,10 @@ public class Scheduler {
                     newsCrawlerService.crawlWebsiteForNews();
                 }
 
+                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.CompleteSportNewsCrawlerServiceImpl"){
+                    newsCrawlerService.crawlWebsiteForNews();
+                }
+
                 if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.LIBNewsCrawlerServiceImpl"){
                     newsCrawlerService.crawlWebsiteForNews();
                 }
@@ -77,7 +81,7 @@ public class Scheduler {
                 if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.news24NewsCrawlerServiceImpl"){
                     newsCrawlerService.crawlWebsiteForNews();
                 }
-            
+
                 if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.VanguardNewsCrawlerServiceImpl"){
                     newsCrawlerService.crawlWebsiteForNews();
                 }
@@ -89,13 +93,11 @@ public class Scheduler {
                 if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.TechPointNewsCrawlerServiceImpl"){
                     newsCrawlerService.crawlWebsiteForNews();
                 }
-                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.CompleteSportNewsCrawlerServiceImpl"){
+
+
+                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.YouTubeNewsCrawlerServiceImpl"){
                     newsCrawlerService.crawlWebsiteForNews();
                 }
-
-//                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.YouTubeNewsCrawlerServiceImpl"){
-//                    newsCrawlerService.crawlWebsiteForNews();
-//                }
 
 
 
