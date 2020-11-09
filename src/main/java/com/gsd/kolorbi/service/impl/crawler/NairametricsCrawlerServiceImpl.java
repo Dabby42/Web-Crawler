@@ -16,46 +16,41 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class IndianExpressCrawlerServiceImpl implements NewsCrawlerService {
+public class NairametricsCrawlerServiceImpl implements NewsCrawlerService {
 
     @Autowired
     NewsService newsService;
 
-    private final String source = "https://indianexpress.com/latest-news/";
+    private final String source = "https://nairametrics.com/category/nigeria-business-news/";
 
     @Override
     public void crawlWebsiteForNews() throws Exception {
         List<News> newss = new ArrayList<>();
         Document homeDocument = Jsoup.connect(source).get();
-        Elements articleRows = homeDocument.select("div.articles");
-//        System.out.println(articleRows.outerHtml());
-
+        Elements articleRows = homeDocument.select("li.mvp-blog-story-wrap.left.relative.infinite-post");
         for (int i = articleRows.size() - 1; i >= 0; i--) {
             News news = new News();
             Element articleBlock = articleRows.get(i);
-            String sourceURL = articleBlock.select("div[class=snaps] a").attr("href");
+            String sourceURL = articleBlock.select("a").attr("href");
+            ;
             Document newsDocument = Jsoup.connect(sourceURL).get();
-            Elements entryContent = newsDocument.getElementsByClass("full-details");
             String newsImageURL = getNewsImageURL(newsDocument);
-            List<String> newsContent = getNewsContents(entryContent);
-            Elements categoryRows = newsDocument.select("ol[class=m-breadcrumb] li");
-            for (int j = 1; j <= categoryRows.size() - 2; j++) {
-                Element categoryBlock = categoryRows.get(j);
-                String category = categoryBlock.select("a").text();
-                news.setCategory(category);
-            }
-            news.setSource("indianexpress.com");
+            List<String> newsContent = getNewsContents(newsDocument);
+
+            news.setSource("nairametrics.com");
             news.setCountry("NG");
-            news.setSourceLogoURL("https://indianexpress.com/wp-content/themes/indianexpress/images/indian-express-logo-n.svg");
+            news.setSourceLogoURL("https://i2.wp.com/nairametrics.com/wp-content/uploads/2020/04/cropped-favicon-1.png?fit=32%2C32&ssl=1");
             news.setSourceURL(sourceURL);
             news.setNewsImageURL(newsImageURL);
-            news.setSubject(newsDocument.select("div[class=heading-part] h1").text());
+            news.setSubject(articleBlock.select("div[class=mvp-blog-story-text left relative] h2").html());
             news.setCrawledDate(new Date());
+            news.setCategory(articleBlock.select("div[class=mvp-cat-date-wrap left relative] span[class=mvp-cd-cat left relative]").text());
             news.setContents(newsContent);
             newss.add(news);
             newsService.saveNews(news);
         }
     }
+
 
     private String getNewsImageURL(Document newsDocument){
         Elements meta = newsDocument.select("meta");
@@ -70,18 +65,24 @@ public class IndianExpressCrawlerServiceImpl implements NewsCrawlerService {
 
     }
 
-    public List<String> getNewsContents(Elements newsContent) throws IOException {
+    public List<String> getNewsContents(Document newsDocument) throws IOException {
         List<String> contents = new ArrayList<>();
-        for(Element ncontainer:newsContent){
-            for(Element ncontent:ncontainer.children()){
-                if(ncontent.select("p") != null ){
-                    if(!ncontent.select("p").attr("class").toString().equals("appstext")){
-                        contents.add(ncontent.select("p").text());
-                    };
+
+        Elements newsBlock = newsDocument.select("div.theiaPostSlider_preloadedSlide").get(0).children();
+
+        for(Element ncontent:newsBlock){
+            if(ncontent.select("p") != null){
+//                System.out.println(ncontent.select("p").text().trim() +" "+ncontent.select("p").text().trim().length());
+                if(ncontent.select("p").text().trim().length() > 0){
+                    contents.add(ncontent.select("p").text());
+                    contents.add("");
                 }
+
             }
         }
 
         return contents;
+
+
     }
 }
