@@ -76,7 +76,11 @@ public class IndianExpressCrawlerServiceImpl implements NewsCrawlerService {
             for(Element ncontent:ncontainer.children()){
                 if(ncontent.select("p") != null ){
                     if(!ncontent.select("p").attr("class").toString().equals("appstext")){
-                        contents.add(ncontent.select("p").text());
+                        if(ncontent.select("p").text().trim().length() > 0){
+                            contents.add(ncontent.select("p").text());
+                            contents.add("");
+                        }
+
                     };
                 }
             }

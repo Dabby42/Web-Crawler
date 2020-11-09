@@ -44,7 +44,7 @@ public class CompleteSportNewsCrawlerServiceImpl implements NewsCrawlerService {
             news.setSourceLogoURL("https://www.completesports.com/wp-content/uploads/2017/08/CSLogo.png");
             news.setSourceURL(sourceURL);
             news.setNewsImageURL(newsImageURL);
-            news.setSubject(articleBlock.select("h3[class=item-title] a").text());
+            news.setSubject(newsDocument.select("h1.post-title.entry-title").text());
             news.setCrawledDate(new Date());
             news.setCategory("Sport");
             news.setContents(newsContent);
