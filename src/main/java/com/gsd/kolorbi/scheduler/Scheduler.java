@@ -62,36 +62,46 @@ public class Scheduler {
             try {
 
                 System.out.println(newsCrawlerService.getClass().getName());
-                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.NairametricsCrawlerServiceImpl"){
-                    newsCrawlerService.crawlWebsiteForNews();
-                }
-                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.BBCNewsCrawlerServiceImpl"){
+
+//                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.BBCNewsCrawlerServiceImpl"){
+//                    newsCrawlerService.crawlWebsiteForNews();
+//                }
+//
+//                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.OneIndiaCrawlerServiceImpl"){
+//                    newsCrawlerService.crawlWebsiteForNews();
+//                }
+
+
+//
+//                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.CompleteSportNewsCrawlerServiceImpl"){
+//                    newsCrawlerService.crawlWebsiteForNews();
+//                }
+//
+//                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.hindustantimesNewsCrawlerServiceImpl"){
+//                    newsCrawlerService.crawlWebsiteForNews();
+//                }
+                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.IndianExpressCrawlerServiceImpl"){
                     newsCrawlerService.crawlWebsiteForNews();
                 }
 
-                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.OneIndiaCrawlerServiceImpl"){
-                    newsCrawlerService.crawlWebsiteForNews();
-                }
-
-                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.CompleteSportNewsCrawlerServiceImpl"){
-                    newsCrawlerService.crawlWebsiteForNews();
-                }
-
-                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.hindustantimesNewsCrawlerServiceImpl"){
-                    newsCrawlerService.crawlWebsiteForNews();
-                }
                 if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.LIBNewsCrawlerServiceImpl"){
                     newsCrawlerService.crawlWebsiteForNews();
                 }
-//
-                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.PunchNewsCrawlerServiceImpl"){
-                    newsCrawlerService.crawlWebsiteForNews();
-                }
-//
-                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.news24NewsCrawlerServiceImpl"){
+
+
+
+                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.NairametricsCrawlerServiceImpl"){
                     newsCrawlerService.crawlWebsiteForNews();
                 }
 
+                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.PunchNewsCrawlerServiceImpl"){
+                    newsCrawlerService.crawlWebsiteForNews();
+                }
+
+                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.news24NewsCrawlerServiceImpl"){
+                    newsCrawlerService.crawlWebsiteForNews();
+                }
+//
                 if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.VanguardNewsCrawlerServiceImpl"){
                     newsCrawlerService.crawlWebsiteForNews();
                 }
@@ -99,7 +109,7 @@ public class Scheduler {
                 if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.DailyPostNewsCrawlerServiceImpl"){
                     newsCrawlerService.crawlWebsiteForNews();
                 }
-
+//
                 if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.TechPointNewsCrawlerServiceImpl"){
                     newsCrawlerService.crawlWebsiteForNews();
                 }
