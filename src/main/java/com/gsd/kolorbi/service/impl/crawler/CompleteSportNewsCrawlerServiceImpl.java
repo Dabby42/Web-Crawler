@@ -29,28 +29,32 @@ public class CompleteSportNewsCrawlerServiceImpl implements NewsCrawlerService {
         List<News> newss = new ArrayList<>();
         Document homeDocument = Jsoup.connect(source).get();
         Elements articleRows = homeDocument.select("div.widget-content.feed-widget-content.widget-content-magone-archive-blog-rolls");
-//        System.out.println(articleRows.outerHtml());
+        for (Element ncontainer : articleRows) {
+            for (Element ncontent : ncontainer.children()) {
+//                System.out.println(ncontent);
+                if (!ncontent.hasClass("AdCompactSides")){
+                    News news = new News();
+                    String sourceURL = ncontent.select("a").attr("href");
+                    System.out.println(sourceURL);
+                    Document newsDocument = Jsoup.connect(sourceURL).get();
+                    String newsImageURL = getNewsImageURL(newsDocument);
+                    List<String> newsContent = getNewsContents(newsDocument);
 
-        for (int i = articleRows.size() - 1; i >= 0; i--) {
-            News news = new News();
-            Element articleBlock = articleRows.get(i);
-            String sourceURL = articleBlock.select("a").attr("href");
-            Document newsDocument = Jsoup.connect(sourceURL).get();
-            String newsImageURL = getNewsImageURL(newsDocument);
-            List<String> newsContent = getNewsContents(newsDocument);
-
-            news.setSource("completesports.com");
-            news.setCountry("NG");
-            news.setSourceLogoURL("https://www.completesports.com/wp-content/uploads/2017/08/CSLogo.png");
-            news.setSourceURL(sourceURL);
-            news.setNewsImageURL(newsImageURL);
-            news.setSubject(newsDocument.select("h1.post-title.entry-title").text());
-            news.setCrawledDate(new Date());
-            news.setCategory("Sport");
-            news.setContents(newsContent);
-            newss.add(news);
-            newsService.saveNews(news);
+                    news.setSource("completesports.com");
+                    news.setCountry("NG");
+                    news.setSourceLogoURL("https://www.completesports.com/wp-content/uploads/2017/08/CSLogo.png");
+                    news.setSourceURL(sourceURL);
+                    news.setNewsImageURL(newsImageURL);
+                    news.setSubject(ncontent.select("h3.item-title").text());
+                    news.setCrawledDate(new Date());
+                    news.setCategory("Sport");
+                    news.setContents(newsContent);
+                    newss.add(news);
+                    newsService.saveNews(news);
+                }
+            }
         }
+
     }
 
     private String getNewsImageURL(Document newsDocument){
@@ -73,7 +77,7 @@ public class CompleteSportNewsCrawlerServiceImpl implements NewsCrawlerService {
 
         for(Element ncontent:newsBlock.children()){
             if(ncontent.select("p") != null){
-                System.out.println(ncontent.select("p").text().trim() +" "+ncontent.select("p").text().trim().length());
+//                System.out.println(ncontent.select("p").text().trim() +" "+ncontent.select("p").text().trim().length());
                 if(ncontent.select("p").text().trim().length() > 0){
                     contents.add(ncontent.select("p").text().trim());
                     contents.add("");

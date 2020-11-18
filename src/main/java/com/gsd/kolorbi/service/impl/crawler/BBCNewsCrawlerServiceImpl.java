@@ -28,44 +28,49 @@ public class BBCNewsCrawlerServiceImpl implements NewsCrawlerService {
         List<News> newss = new ArrayList<>();
         Document homeDocument = Jsoup.connect(source).get();
         Elements articleRows = homeDocument.select("div.content--block--modules");
-//        System.out.println(articleRows.outerHtml());
-        for (int i = 0; i < articleRows.size(); i++) {
-            News news = new News();
-            Element articleBlock = articleRows.get(i);
-            Elements subjectRows = articleBlock.select("h3.media__title a");
-            for (int j = 0; j < subjectRows.size(); j++) {
-                Element subjectBlock = subjectRows.get(j);
-                String subject = subjectBlock.text();
-                String sourceURL = subjectBlock.attr("href");
-                if (!sourceURL.startsWith("https")){
-                    sourceURL = "https://www.bbc.com" + subjectBlock.attr("href");
-                }
-                Document newsDocument = Jsoup.connect(sourceURL).get();
-                List<String> newsContent = getNewsContents(newsDocument);
-//                System.out.println(newsContent);
-                String newsImageURL = getNewsImageURL(newsDocument);
-                news.setNewsImageURL(newsImageURL);
-                news.setContents(newsContent);
-                news.setSourceURL(sourceURL);
-                news.setSubject(subject);
-            }
 
-            Elements categoryRows = articleBlock.select("div.media__content a");
-            for (int k = 0; k < categoryRows.size(); k++) {
-                Element categoryBlock = categoryRows.get(k);
-                String category = categoryBlock.text();
-                news.setCategory(category);
+        for (Element ncontainer : articleRows) {
+            for (Element ncontent : ncontainer.children()) {
+                    News news = new News();
+//                    Element articleBlock = ncontent;
+                    Elements subjectRows = ncontent.select("h3.media__title a");
+//                     System.out.println(subjectRows.size());
+                    for (int j = 0; j < subjectRows.size(); j++) {
+                        Element subjectBlock = subjectRows.get(j);
+                        String subject = subjectBlock.text();
+                        System.out.println(subject);
+                        String sourceURL = subjectBlock.attr("href");
+                        if (!sourceURL.startsWith("https")){
+                            sourceURL = "https://www.bbc.com" + subjectBlock.attr("href");
+                        }
+                        Document newsDocument = Jsoup.connect(sourceURL).get();
+                        List<String> newsContent = getNewsContents(newsDocument);
+                        //  System.out.println(newsContent);
+                        String newsImageURL = getNewsImageURL(newsDocument);
+                        news.setNewsImageURL(newsImageURL);
+                        news.setContents(newsContent);
+                        news.setSourceURL(sourceURL);
+                        news.setSubject(subject);
+                    }
+
+                    Elements categoryRows = ncontent.select("div.media__content a");
+                    for (int k = 0; k < categoryRows.size(); k++) {
+                        Element categoryBlock = categoryRows.get(k);
+                        String category = categoryBlock.text();
+                        news.setCategory(category);
 //                if (category != "Worklife"){
 //                    news.setContents(newsContent);
 //                }
+                    }
+                    news.setSource("bbc.com");
+                    news.setCountry("NG");
+                    news.setSourceLogoURL("https://static.bbci.co.uk/wwhp/1.146.0/responsive/img/apple-touch/apple-touch-180.jpg");
+                    news.setCrawledDate(new Date());
+                    newss.add(news);
+                    newsService.saveNews(news);
             }
-            news.setSource("bbc.com");
-            news.setCountry("NG");
-            news.setSourceLogoURL("https://static.bbci.co.uk/wwhp/1.146.0/responsive/img/apple-touch/apple-touch-180.jpg");
-            news.setCrawledDate(new Date());
-            newss.add(news);
-            newsService.saveNews(news);
         }
+
     }
 
     private String getNewsImageURL(Document newsDocument){
