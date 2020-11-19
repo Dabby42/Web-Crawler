@@ -63,16 +63,10 @@ public class Scheduler {
 
                 System.out.println(newsCrawlerService.getClass().getName());
 
-                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.NairametricsCrawlerServiceImpl"){
-                    newsCrawlerService.crawlWebsiteForNews();
-                }
 //                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.BBCNewsCrawlerServiceImpl"){
 //                    newsCrawlerService.crawlWebsiteForNews();
 //                }
 
-                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.BBCNewsCrawlerServiceImpl"){
-                    newsCrawlerService.crawlWebsiteForNews();
-                }
 
                 if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.OneIndiaCrawlerServiceImpl"){
                     newsCrawlerService.crawlWebsiteForNews();
