@@ -55,7 +55,7 @@ public class Scheduler {
         });
     }
 
-    @Scheduled(cron = "0 */59 * * * *", zone = "Africa/Lagos")
+    @Scheduled(cron = "0 */1 * * * *", zone = "Africa/Lagos")
     public void newsCrawlSchedule() {
 
         for(NewsCrawlerService newsCrawlerService:newsCrawlerServices){
@@ -67,19 +67,20 @@ public class Scheduler {
 //                    newsCrawlerService.crawlWebsiteForNews();
 //                }
 
-
-                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.OneIndiaCrawlerServiceImpl"){
-                    newsCrawlerService.crawlWebsiteForNews();
-                }
-
-
+//
+//                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.OneIndiaCrawlerServiceImpl"){
+//                    newsCrawlerService.crawlWebsiteForNews();
+//                }
+//
+//
                 if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.CompleteSportNewsCrawlerServiceImpl"){
                     newsCrawlerService.crawlWebsiteForNews();
                 }
-
+//
                 if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.hindustantimesNewsCrawlerServiceImpl"){
                     newsCrawlerService.crawlWebsiteForNews();
                 }
+
                 if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.IndianExpressCrawlerServiceImpl"){
                     newsCrawlerService.crawlWebsiteForNews();
                 }
@@ -112,9 +113,6 @@ public class Scheduler {
                     newsCrawlerService.crawlWebsiteForNews();
                 }
 
-//                if(newsCrawlerService.getClass().getName() == "com.gsd.kolorbi.service.impl.crawler.YouTubeNewsCrawlerServiceImpl"){
-//                    newsCrawlerService.crawlWebsiteForNews();
-//                }
 
 
 
