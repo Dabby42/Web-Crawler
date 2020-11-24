@@ -27,42 +27,36 @@ public class OneIndiaCrawlerServiceImpl implements NewsCrawlerService {
     public void crawlWebsiteForNews() throws Exception {
         List<News> newss = new ArrayList<>();
         Document homeDocument = Jsoup.connect(source).get();
-        Elements articleRows = homeDocument.select("div#collection-wrapper");
-//        System.out.println(articleRows.size());
-        for (Element ncontainer : articleRows) {
-            for (Element ncontent : ncontainer.children()) {
+        Elements articleRows = homeDocument.select("li.clearfix");
+        for (Element ncontent : articleRows) {
+            if (!ncontent.hasClass("mid-outbrain")) {
                 News news = new News();
-                String sourceURL = "https://www.oneindia.com/india/" + ncontent.select("h2.collection-heading.news-desc a").attr("href");
-                System.out.println(sourceURL);
+                String sourceURL = "https://www.oneindia.com" + ncontent.select("div.cityblock-title.news-desc a").attr("href");
                 Document newsDocument = Jsoup.connect(sourceURL).get();
                 Elements entryContent = newsDocument.getElementsByClass("oi-article-lt");
                 String newsImageURL = getNewsImageURL(newsDocument);
                 List<String> newsContent = getNewsContents(entryContent);
-                String category = newsDocument.select("div.breadcrump.clearfix a").text();
-                news.setCategory(category);
+                Elements categories = newsDocument.select("div.breadcrump.clearfix a");
+                String subject = ncontent.select("div.cityblock-title.news-desc a").text();
+                for (int i = 1; i < categories.size(); i++) {
+                    String category = categories.get(i).text();
+                    news.setCategory(category);
+                }
                 news.setSource("oneindia.com");
                 news.setCountry("NG");
                 news.setSourceLogoURL("https://www.oneindia.com/images/oneindia-logo.svg");
                 news.setSourceURL(sourceURL);
                 news.setNewsImageURL(newsImageURL);
-                Elements subjects = ncontent.select("div.collection-container");
-
-                for (int j = 0; j < subjects.size(); j++) {
-                    String subject = subjects.get(j).text();
-                    System.out.println(subject);
-                    news.setSubject(subject);
-                }
-
+                news.setSubject(subject);
                 news.setCrawledDate(new Date());
                 news.setContents(newsContent);
                 newss.add(news);
                 newsService.saveNews(news);
             }
-        }
-        for (int i = articleRows.size() - 1; i >= 0; i--) {
 
         }
     }
+
 
     private String getNewsImageURL(Document newsDocument){
         Elements meta = newsDocument.select("meta");
