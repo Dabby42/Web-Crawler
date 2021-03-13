@@ -6,7 +6,7 @@
 /target/maven-status/
 /target/surefire-reports/
 /target/kolorbi-0.0.1-RELEASE.jar.original
-
+/src/main/resources/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
